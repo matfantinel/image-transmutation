@@ -23,7 +23,7 @@ function main() {
   let args = minimist(process.argv.slice(2));
   if (args.run === true || args.R === true || args.r === true) {
     const transmuter = require('./transmuter.js');
-    const result = transmuter.run();
+    const result = transmuter.run(args);
     if (!result) {
       printHelpText();
     }
