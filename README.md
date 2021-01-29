@@ -17,6 +17,7 @@ It is currently only usable through command line, however I plan on making it ea
 
 
 ## Available arguments
+```
   --help, -h        Displays this help text
 
   --run, -r         Executes the script
@@ -26,7 +27,7 @@ It is currently only usable through command line, however I plan on making it ea
     --targetFormats     REQUIRED - The formats the script will convert to.
     --widths            Optional - The widths to which the images will be resized to. If not declared, images will be kept at their original size.
     --enlarge           Optional - Defines if images should be enlarged in case their original width is smaller than the target size defined on --widths.
-
+```
 
 ## Example command
 This command runs using the folders built-in to this repository. It takes jpg, jpeg and png images and converts them into webp and avif, with widths of 500px and 1000px.
