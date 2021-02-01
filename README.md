@@ -4,6 +4,8 @@ This is a helper script built with NodeJS that automatically converts and resize
 
 It is currently only usable through command line, however I plan on making it easier to access in the future.
 
+I have written [a blog post about optimizing images](https://fantinel.dev/web-images-modern-formats/), which includes usage of this script, if you'd like to read more about use cases for it.
+
 **Why transmutation?** Transmutation is the action of altering the properties of an object or being (or an image file). It is also a school of magic in many fantasy universes! 🎲
 
 ## How to run/build
