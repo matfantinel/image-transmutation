@@ -38,6 +38,14 @@ function validateParams(args) {
     return false;
   }
 
+  if (!(params.inputFormats instanceof Array)) {
+    params.inputFormats = [ params.inputFormats ];
+  }
+
+  if (!(params.outputFormats instanceof Array)) {
+    params.outputFormats = [ params.outputFormats ];
+  }
+
   return true;
 }
 
