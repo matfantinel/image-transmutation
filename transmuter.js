@@ -46,6 +46,10 @@ function validateParams(args) {
     params.outputFormats = [ params.outputFormats ];
   }
 
+  if (!(params.widths instanceof Array)) {
+    params.widths = [ params.widths ];
+  }
+
   return true;
 }
 
