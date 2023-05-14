@@ -1,18 +1,31 @@
 {
-  "name": "sharp-test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "image-transmutation",
+  "version": "0.1.0",
+  "description": "A way to quickly optimize images based on Sharp.",
+  "main": "src/index.js",
+  "bin": "bin/image-transmutation",
+  "author": "Matheus Fantinel <matt@fantinel.dev> (https://fantinel.dev)",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": "matfantinel/image-transmutation",
+  "homepage": "https://github.com/matfantinel/image-transmutation",
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "Image Optimization",
+    "Image Compression"
+  ],
+  "files": [
+    "bin/",
+    "src/"
+  ],
   "devDependencies": {
+    "glob": "^7.1.6",
+    "minimist": "^1.2.5",
     "sharp": "^0.27.0"
   },
   "dependencies": {
-    "glob": "^7.1.6",
-    "minimist": "^1.2.5"
+    "esm": "^3.2.25"
   }
 }

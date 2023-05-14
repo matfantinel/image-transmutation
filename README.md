@@ -2,21 +2,27 @@
 
 This is a helper script built with NodeJS that automatically converts and resizes your images based on the given arguments. It uses [Sharp](https://github.com/lovell/sharp) to do the necessary conversions.
 
-It is currently only usable through command line, however I plan on making it easier to access in the future.
+It is usable via command line, so you can add it to your package.json scripts after installing the NPM package.
 
 I have written [a blog post about optimizing images](https://fantinel.dev/web-images-modern-formats/), which includes usage of this script, if you'd like to read more about use cases for it.
 
 **Why transmutation?** Transmutation is the action of altering the properties of an object or being (or an image file). It is also a school of magic in many fantasy universes! 🎲
 
-## How to run/build
+## Installation
 
-0. You must have NodeJS installed on your machine;
-1. Clone this repository `git clone https://github.com/matfantinel/image-transmutation`;
-2. Open the project folder `cd image-transmutation`;
-3. Run `npm install` to install the script's dependencies;
-4. You can execute the script by calling `node index.js` to see the available options;
+Simply run `npm install -D image-transmutation` to install it as a development dependency on your project.
 
+## How to use
 
+1. Once you install the NPM package, you can use it with the `image-transmutation` command.
+2. I recommend adding it to your package.json scripts, like so:
+```
+"scripts": {
+  "optimize-images": "image-transmutation --run --sourceFolder \"./source\" --targetFolder \"./target\" --inputFormats \"jpg\" --inputFormats \"jpeg\" --inputFormats \"png\" --outputFormats \"webp\" --outputFormats \"avif\" --widths 500 --widths 1000 --enlarge"
+}
+```
+3. Run `npm run optimize-images` to execute the script.
+4. You can add it to a "postbuild" script, so it runs automatically after your build process.
 
 ## Available arguments
 ```
@@ -29,6 +35,7 @@ I have written [a blog post about optimizing images](https://fantinel.dev/web-im
     --targetFormats     REQUIRED - The formats the script will convert to.
     --widths            Optional - The widths to which the images will be resized to. If not declared, images will be kept at their original size.
     --enlarge           Optional - Defines if images should be enlarged in case their original width is smaller than the target size defined on --widths.
+    --clearTarget       Optional - Defines if the targetFolder should be cleared (all files deleted) before the optimization runs.
 ```
 
 ## Example command

@@ -9,7 +9,8 @@ let params = {
   inputFormats: null,
   outputFormats: null,
   widths: null,
-  enlarge: false
+  enlarge: false,
+  clearTarget: false,
 };
 
 function validateParams(args) {
@@ -24,6 +25,7 @@ function validateParams(args) {
   params.outputFormats = args.outputFormats;
   params.widths = args.widths;
   params.enlarge = args.enlarge;
+  params.clearTarget = args.clearTarget;
 
   if (!params.sourceFolder) {
     console.error('sourceFolder missing');
@@ -60,6 +62,7 @@ function runAllOptimizations() {
         !fs.lstatSync(filepath).isDirectory() &&
         params.inputFormats.indexOf(path.extname(filepath).split('.').pop().toLowerCase()) >= 0
       ) {
+        console.log(`Optimizing ${filepath}`);
         params.outputFormats.forEach((format) => {
           if (params.widths) {
             params.widths.forEach((width) => {
@@ -78,6 +81,10 @@ function optimize(filePath, newFormat, width) {
   const originalFormat = path.basename(filePath).split('.')[1];
   const fileName = path.basename(filePath).split('.')[0];
   const fileRelativePath = filePath.replace(params.sourceFolder, '');
+
+  if (originalFormat === newFormat && !width) {
+    return;
+  }
 
   verifyCreateFolder(path.dirname(`${params.targetFolder}${fileRelativePath}`));
 
@@ -102,6 +109,7 @@ function optimize(filePath, newFormat, width) {
 
 function verifyCreateFolder(directory, deleteIfExists) {  
   if (fs.existsSync(directory) && deleteIfExists) {
+    console.log('Deleting folder');
     fs.rmdirSync(directory, { recursive: true });
   }
   fs.mkdirSync(directory, { recursive: true });
@@ -109,7 +117,7 @@ function verifyCreateFolder(directory, deleteIfExists) {
 
 const run = (args) => {
   if (validateParams(args)) {
-    verifyCreateFolder(params.targetFolder, true);
+    verifyCreateFolder(params.targetFolder, Boolean(params.clearTarget));
     runAllOptimizations();
     return true;
   } else {
