@@ -42,7 +42,7 @@ Simply run `npm install -D image-transmutation` to install it as a development d
 This command runs using the folders built-in to this repository. It takes jpg, jpeg and png images and converts them into webp and avif, with widths of 500px and 1000px.
 
 ```
-node ./index.js --run --sourceFolder "testing-room/source" --targetFolder "testing-room/target" --inputFormats "jpg" --inputFormats "jpeg" --inputFormats "png" --outputFormats "webp" --outputFormats "avif" --widths 500 --widths 1000 --enlarge
+image-transmutation --run --sourceFolder "testing-room/source" --targetFolder "testing-room/target" --inputFormats "jpg" --inputFormats "jpeg" --inputFormats "png" --outputFormats "webp" --outputFormats "avif" --widths 500 --widths 1000 --enlarge
 ```
 
 As a result:
