@@ -10,7 +10,11 @@ I have written [a blog post about optimizing images](https://fantinel.dev/web-im
 
 ## Installation
 
-Simply run `npm install -D image-transmutation` to install it as a development dependency on your project.
+Simply run 
+```shell
+npm install -D image-transmutation
+```
+to install it as a development dependency on your project.
 
 ## How to use
 
