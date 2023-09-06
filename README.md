@@ -1,5 +1,7 @@
 # Image Transmutation 🧙💫
 
+[![npm version](https://badge.fury.io/js/image-transmutation.svg)](//npmjs.com/package/image-transmutation)
+
 This is a helper script built with NodeJS that automatically converts and resizes your images based on the given arguments. It uses [Sharp](https://github.com/lovell/sharp) to do the necessary conversions.
 
 It is usable via command line, so you can add it to your package.json scripts after installing the NPM package.
