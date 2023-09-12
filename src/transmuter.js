@@ -11,6 +11,7 @@ let params = {
   widths: null,
   enlarge: false,
   clearTarget: false,
+  ignoreCache: false
 };
 
 function validateParams(args) {
@@ -26,6 +27,7 @@ function validateParams(args) {
   params.widths = args.widths;
   params.enlarge = args.enlarge;
   params.clearTarget = args.clearTarget;
+  params.ignoreCache = args.ignoreCache;
 
   if (!params.sourceFolder) {
     console.error('sourceFolder missing');
@@ -86,7 +88,21 @@ function optimize(filePath, newFormat, width) {
     return;
   }
 
+  
   verifyCreateFolder(path.dirname(`${params.targetFolder}${fileRelativePath}`));
+
+  // Check if file already exists
+  if (!params.ignoreCache && fs.existsSync(mountName())) {
+    // Check if target file's last modified date is newer than the source file's
+    const sourceModified = fs.statSync(filePath).mtimeMs;
+    const targetModified = fs.statSync(mountName()).mtimeMs;
+    
+    if (targetModified > sourceModified) {
+      // If yes, means it's already been optimized
+      console.log(`File already optimized. Skipping...`);
+      return;
+    }
+  }
 
   sharp(filePath)
     .resize(width ? width : null, null, { withoutEnlargement: !params.enlarge })
