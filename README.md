@@ -18,6 +18,10 @@ npm install -D image-transmutation
 ```
 to install it as a development dependency on your project.
 
+### NodeJS version support
+
+This package (v1.0.0) **requires NodeJS 18 or newer**. In case you need support for older NodeJS versions, you can use v0.1.3 by installing it with: `npm install -D image-transmutation@0.1.3`
+
 ## How to use
 
 1. Once you install the NPM package, you can use it with the `image-transmutation` command.
