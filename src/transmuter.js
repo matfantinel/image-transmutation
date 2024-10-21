@@ -1,7 +1,7 @@
-const sharp = require('sharp');
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import glob from 'glob';
 
 let params = {
   sourceFolder: null,
@@ -141,6 +141,4 @@ const run = (args) => {
   }
 }
 
-module.exports = {
-  run
-}
+export default run;
