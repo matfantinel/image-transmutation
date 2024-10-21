@@ -1,3 +1,4 @@
 node_modules
 .vscode
 testing-room/target
+.DS_STORE

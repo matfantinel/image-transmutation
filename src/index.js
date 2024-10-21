@@ -1,4 +1,5 @@
-const minimist = require('minimist');
+import minimist from 'minimist';
+import transmute from './transmuter.js';
 
 function printHelpText() {
   console.log(`
@@ -24,8 +25,7 @@ function printHelpText() {
 export function cli() {
   let args = minimist(process.argv.slice(2));
   if (args.run === true || args.R === true || args.r === true) {
-    const transmuter = require('./transmuter.js');
-    const result = transmuter.run(args);
+    const result = transmute(args);
     if (!result) {
       printHelpText();
     }
