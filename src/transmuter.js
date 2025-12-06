@@ -84,11 +84,6 @@ function optimize(filePath, newFormat, width) {
   const fileName = path.basename(filePath).split('.')[0];
   const fileRelativePath = filePath.replace(params.sourceFolder, '');
 
-  if (originalFormat === newFormat && !width) {
-    return;
-  }
-
-  
   verifyCreateFolder(path.dirname(`${params.targetFolder}${fileRelativePath}`));
 
   // Check if file already exists
@@ -104,13 +99,26 @@ function optimize(filePath, newFormat, width) {
     }
   }
 
-  sharp(filePath)
-    .resize(width ? width : null, null, { withoutEnlargement: !params.enlarge })
-    .toFile(mountName(), (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+  const image = sharp(filePath)
+    .resize(width ? width : null, null, { withoutEnlargement: !params.enlarge });
+  
+  // Apply format-specific optimization
+  const outputFormat = newFormat ? newFormat : originalFormat;
+  if (outputFormat === 'png') {
+    image.png({ compressionLevel: 9, quality: 100 });
+  } else if (outputFormat === 'jpg' || outputFormat === 'jpeg') {
+    image.jpeg({ quality: 80, progressive: true });
+  } else if (outputFormat === 'webp') {
+    image.webp({ quality: 80 });
+  } else if (outputFormat === 'avif') {
+    image.avif({ quality: 80 });
+  }
+  
+  image.toFile(mountName(), (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
 
   function mountName() {    
     let res = `${params.targetFolder}${path.dirname(fileRelativePath)}/${fileName}`;
