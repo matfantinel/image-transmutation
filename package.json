@@ -3,12 +3,17 @@
   "version": "1.1.1",
   "description": "A way to quickly optimize images based on Sharp.",
   "main": "src/index.js",
-  "bin": "bin/image-transmutation",
+  "bin": {
+    "image-transmutation": "bin/image-transmutation"
+  },
   "author": "Matheus Fantinel <matt@fantinel.dev> (https://fantinel.dev)",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "matfantinel/image-transmutation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matfantinel/image-transmutation.git"
+  },
   "homepage": "https://github.com/matfantinel/image-transmutation",
   "license": "MIT",
   "keywords": [
@@ -20,8 +25,7 @@
     "bin/",
     "src/"
   ],
-  "devDependencies": {    
-  },
+  "devDependencies": {},
   "dependencies": {
     "esm": "^3.2.25",
     "glob": "^7.1.6",
