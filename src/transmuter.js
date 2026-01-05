@@ -100,6 +100,7 @@ function optimize(filePath, newFormat, width) {
   }
 
   const image = sharp(filePath)
+    .rotate()
     .resize(width ? width : null, null, { withoutEnlargement: !params.enlarge });
   
   // Apply format-specific optimization
