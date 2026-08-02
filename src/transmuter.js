@@ -99,10 +99,13 @@ function optimize(filePath, newFormat, width) {
     }
   }
 
-  const image = sharp(filePath)
-    .rotate()
-    .resize(width ? width : null, null, { withoutEnlargement: !params.enlarge });
-  
+  const isFullSize = width === 'full';
+
+  const image = sharp(filePath).rotate();
+  if (!isFullSize && width) {
+    image.resize(width, null, { withoutEnlargement: !params.enlarge });
+  }
+
   // Apply format-specific optimization
   const outputFormat = newFormat ? newFormat : originalFormat;
   if (outputFormat === 'png') {
@@ -123,7 +126,7 @@ function optimize(filePath, newFormat, width) {
 
   function mountName() {    
     let res = `${params.targetFolder}${path.dirname(fileRelativePath)}/${fileName}`;
-    if (width) {
+    if (width && width !== 'full') {
       res += `-${width}w`;
     }
     res += `.${newFormat ? newFormat : originalFormat}`;

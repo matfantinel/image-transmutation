@@ -1,6 +1,6 @@
 {
   "name": "image-transmutation",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A way to quickly optimize images based on Sharp.",
   "main": "src/index.js",
   "bin": {

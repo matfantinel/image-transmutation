@@ -43,7 +43,7 @@ This package (v1.0.0) **requires NodeJS 18 or newer**. In case you need support 
     --targetFolder      REQUIRED - The relative or absolute path to the destination folder where the converted images will be saved at. Warning: all contents in the folder will be deleted prior to execution.
     --inputFormats      REQUIRED - The existing formats that the script will look for, like jpg and png.
     --outputFormats     REQUIRED - The formats the script will convert to.
-    --widths            Optional - The widths to which the images will be resized to. If not declared, images will be kept at their original size.
+    --widths            Optional - The widths to which the images will be resized to. If not declared, images will be kept at their original size. You can also declare "full" as one of the values to have a variant with the original width.
     --enlarge           Optional - Defines if images should be enlarged in case their original width is smaller than the target size defined on --widths.
     --clearTarget       Optional - Defines if the targetFolder should be cleared (all files deleted) before the optimization runs.
 ```
