@@ -9,6 +9,7 @@ let params = {
   inputFormats: null,
   outputFormats: null,
   widths: null,
+  maxWidth: null,
   enlarge: false,
   clearTarget: false,
   ignoreCache: false
@@ -25,6 +26,7 @@ function validateParams(args) {
   params.inputFormats = args.inputFormats;
   params.outputFormats = args.outputFormats;
   params.widths = args.widths;
+  params.maxWidth = args.maxWidth;
   params.enlarge = args.enlarge;
   params.clearTarget = args.clearTarget;
   params.ignoreCache = args.ignoreCache;
@@ -54,6 +56,14 @@ function validateParams(args) {
     params.widths = [ params.widths ];
   }
 
+  if (params.maxWidth !== undefined && params.maxWidth !== null) {
+    params.maxWidth = Number(params.maxWidth);
+    if (!Number.isFinite(params.maxWidth) || params.maxWidth <= 0) {
+      console.error('maxWidth must be a positive number');
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -80,7 +90,7 @@ function runAllOptimizations() {
 }
 
 function optimize(filePath, newFormat, width) {
-  const originalFormat = path.basename(filePath).split('.')[1];
+  const originalFormat = path.extname(filePath).split('.').pop().toLowerCase();
   const fileName = path.basename(filePath).split('.')[0];
   const fileRelativePath = filePath.replace(params.sourceFolder, '');
 
@@ -104,6 +114,8 @@ function optimize(filePath, newFormat, width) {
   const image = sharp(filePath).rotate();
   if (!isFullSize && width) {
     image.resize(width, null, { withoutEnlargement: !params.enlarge });
+  } else if (params.maxWidth) {
+    image.resize(params.maxWidth, null, { withoutEnlargement: true });
   }
 
   // Apply format-specific optimization
@@ -118,11 +130,31 @@ function optimize(filePath, newFormat, width) {
     image.avif({ quality: 80 });
   }
   
-  image.toFile(mountName(), (err) => {
+  image.toFile(mountName(), (err, info) => {
     if (err) {
       console.log(err);
+      return;
     }
+    keepOriginalIfSmaller(info);
   });
+
+  function keepOriginalIfSmaller(info) {
+    const sameFormat =
+      outputFormat === originalFormat ||
+      ([ 'jpg', 'jpeg' ].includes(outputFormat) && [ 'jpg', 'jpeg' ].includes(originalFormat));
+    if (!sameFormat || info.size <= fs.statSync(filePath).size) {
+      return;
+    }
+    sharp(filePath).metadata().then((meta) => {
+      const rotated = meta.orientation >= 5;
+      const sourceWidth = rotated ? meta.height : meta.width;
+      const sourceHeight = rotated ? meta.width : meta.height;
+      if (info.width === sourceWidth && info.height === sourceHeight) {
+        fs.copyFileSync(filePath, mountName());
+        console.log(`Optimized file was larger than the original. Kept original: ${mountName()}`);
+      }
+    }).catch((metaErr) => console.log(metaErr));
+  }
 
   function mountName() {    
     let res = `${params.targetFolder}${path.dirname(fileRelativePath)}/${fileName}`;
